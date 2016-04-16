@@ -2,6 +2,7 @@ import sys
 import telepot
 import json
 import re
+import requests
 from telepot.delegate import per_chat_id, create_open
 from goose import Goose
 
@@ -32,9 +33,13 @@ class MessageExtractArticle(telepot.helper.ChatHandler):
             print("Parsed title:" + item["link_title"].encode('utf-8'))
             print("Parsed json:" + json_data.encode('utf-8'))
 
-            self.sender.sendMessage(item["link_title"])
+            server_url = 'http://localhost:8080/add/article'
+            r = requests.post(server_url, data=json_data, headers={"content-type": "application/json"})
+            print("Response: " + str(r))
 
-        # TODO: send json_items to Main Server
+            # TODO: remove sendMessage
+
+            self.sender.sendMessage(item["link_title"])
 
 
 TOKEN = sys.argv[1]  # get token from command-line

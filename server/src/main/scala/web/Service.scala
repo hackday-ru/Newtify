@@ -1,7 +1,8 @@
 package web
 
 import akka.actor.Actor
-import spray.http.MediaTypes._
+import spray.httpx.SprayJsonSupport
+import spray.json.DefaultJsonProtocol
 import spray.routing.HttpService
 
 class ApiActor extends Actor with MainController {
@@ -16,21 +17,23 @@ class ApiActor extends Actor with MainController {
   def receive = runRoute(route)
 }
 
+case class UserArticle(text: String, link_title: String, url: String, user_id: Long)
+
+object UserArticleJsonSupport extends DefaultJsonProtocol with SprayJsonSupport {
+  implicit val Formats = jsonFormat4(UserArticle)
+}
+
 trait MainController extends HttpService {
 
-  val route =
-    path("") {
-      get {
-        respondWithMediaType(`text/html`) { // XML is marshalled to `text/xml` by default, so we simply override here
-          complete {
-            <html>
-              <body>
-                <h1>Worked!</h1>
-              </body>
-            </html>
-          }
-        }
+  import UserArticleJsonSupport._
+
+  //TODO: implement saving user interests.
+  val route = post {
+    path("add" / "article") {
+      entity(as[UserArticle]) { userArticle =>
+        println(s"UserArticle: ${userArticle.user_id} - text: ${userArticle.text}")
+        complete(s"UserArticle: ${userArticle.user_id} - text: ${userArticle.text}")
       }
     }
-
+  }
 }
