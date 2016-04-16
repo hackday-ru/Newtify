@@ -21,7 +21,9 @@ libraryDependencies ++= {
     "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
     "org.apache.spark" %% "spark-mllib" % sparkVersion % "provided",
     // elastic search client
-    "com.sksamuel.elastic4s" % "elastic4s-core_2.10" % "2.3.0"
+    "com.sksamuel.elastic4s" % "elastic4s-core_2.10" % "2.3.0",
+    // redis
+    "com.livestream" %% "scredis" % "2.0.6"
   )
 }
     

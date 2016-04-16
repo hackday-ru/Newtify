@@ -19,9 +19,9 @@ object ServerStarter extends App with SimpleRoutingApp {
     path("search") {
       get {
         parameters('q) { (q) =>
-          val resp = client.execute {search in "article" query q}.await
+          val resp = client.execute {search in "news" query q}.await
           complete(resp.getHits.hits().map(x => x.getSource.get("url"))
-            .mkString("[",",","]"))
+            .mkString("[\"","\",\"","\"]"))
         }
       }
     }

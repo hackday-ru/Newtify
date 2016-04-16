@@ -32,6 +32,7 @@ trait MainController extends HttpService {
     path("add" / "article") {
       entity(as[UserArticle]) { userArticle =>
         println(s"UserArticle: ${userArticle.user_id} - text: ${userArticle.text}")
+        RedisService.set(userArticle.user_id.toString, userArticle.text)
         complete(s"UserArticle: ${userArticle.user_id} - text: ${userArticle.text}")
       }
     }
