@@ -14,9 +14,9 @@ libraryDependencies ++= {
     "io.spray" %% "spray-routing" % sprayVersion,
     "io.spray" %% "spray-json" % "1.3.1",
     "io.spray" %% "spray-httpx" % sprayVersion,
-    "org.apache.spark" %% "spark-core" % sparkVersion,
-    "org.apache.spark" %% "spark-sql" % sparkVersion,
-    "org.apache.spark" %% "spark-mllib" % sparkVersion
+    "org.apache.spark" %% "spark-core" % sparkVersion  % "provided",
+    "org.apache.spark" %% "spark-sql" % sparkVersion  % "provided",
+    "org.apache.spark" %% "spark-mllib" % sparkVersion  % "provided"
   )
 }
     
