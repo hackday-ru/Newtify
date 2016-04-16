@@ -21,6 +21,10 @@ class MessageExtractArticle(telepot.helper.ChatHandler):
 
         urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
 
+        if not urls:
+            self.sender.sendMessage("Please, provide a valid url.")
+            return
+
         json_items = []
         for url in urls:
             article = Goose().extract(url)
