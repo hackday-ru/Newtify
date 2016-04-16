@@ -1,6 +1,7 @@
 import sys
 import telepot
 import json
+import re
 from telepot.delegate import per_chat_id, create_open
 from goose import Goose
 
@@ -15,20 +16,25 @@ class MessageExtractArticle(telepot.helper.ChatHandler):
         super(MessageExtractArticle, self).__init__(seed_tuple, timeout)
 
     def on_chat_message(self, initial_msg):
-        url = initial_msg['text']
+        message = initial_msg['text']
 
-        article = Goose().extract(url)
-        item = {"text": article.cleaned_text, "link_title": article.title, "url": url,
-                "user_id": initial_msg['chat']['id']}
-        json_data = json.dumps(item)
+        urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
 
-        print("Received url:" + str(item["url"]))
-        print("Parsed title:" + item["link_title"].encode('utf-8'))
-        print("Parsed json:" + json_data.encode('utf-8'))
+        json_items = []
+        for url in urls:
+            article = Goose().extract(url)
+            item = {"text": article.cleaned_text, "link_title": article.title, "url": url,
+                    "user_id": initial_msg['chat']['id']}
+            json_data = json.dumps(item)
+            json_items.append(json_data)
 
-        self.sender.sendMessage(item["link_title"])
+            print("Received url:" + str(item["url"]))
+            print("Parsed title:" + item["link_title"].encode('utf-8'))
+            print("Parsed json:" + json_data.encode('utf-8'))
 
-        # TODO: send an item to Main Server
+            self.sender.sendMessage(item["link_title"])
+
+        # TODO: send json_items to Main Server
 
 
 TOKEN = sys.argv[1]  # get token from command-line
