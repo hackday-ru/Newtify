@@ -28,7 +28,10 @@ class MessageExtractArticle(telepot.helper.ChatHandler):
             response = requests.get(server_url, params=payload)
             print("Response: " + str(response))
 
-            self.sender.sendMessage(response)
+            responseUrls = response.text.split(',')
+
+            for responseUrl in responseUrls:
+                self.sender.sendMessage(responseUrl)
             return
 
         json_items = []
