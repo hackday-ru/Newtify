@@ -1,6 +1,6 @@
 ## Elastic search prepration
 
-1. Run es instance: `docker run -d -p 8090:8090 tobilg/spark-jobserver:latest`
+1. Run es instance: `docker run -p 9200:9200 -p 9300:9300 elasticsearch`
 
 2. Prepare test data: `cat hackernews_archive.json | jq -c '.[] | { index: { _index: "news", _type: "mytype" } },. ' >> parsed_data`
 

@@ -17,9 +17,9 @@ libraryDependencies ++= {
     "io.spray" %% "spray-json" % "1.3.1",
     "io.spray" %% "spray-httpx" % sprayVersion,
     //    spark
-    "org.apache.spark" %% "spark-core" % sparkVersion % "provided",
-    "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
-    "org.apache.spark" %% "spark-mllib" % sparkVersion % "provided",
+    "org.apache.spark" %% "spark-core" % sparkVersion,
+    "org.apache.spark" %% "spark-sql" % sparkVersion,
+    "org.apache.spark" %% "spark-mllib" % sparkVersion,
     // elastic search client
     "com.sksamuel.elastic4s" % "elastic4s-core_2.10" % "2.3.0",
     // redis
@@ -28,4 +28,7 @@ libraryDependencies ++= {
 
   )
 }
+
+libraryDependencies += "io.snappydata" % "snappy-spark-mllib_2.10" % "1.6.1"
+
     

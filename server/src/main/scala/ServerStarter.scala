@@ -8,7 +8,7 @@ object ServerStarter extends App with SimpleRoutingApp {
   val client = ElasticClient
     .transport(ElasticsearchClientUri("elasticsearch://localhost:9300"))
 
-  startServer(interface = "192.168.1.132", port = 8080) {
+  startServer(interface = "localhost", port = 8080) {
 
     path("") {
       get {
@@ -25,7 +25,7 @@ object ServerStarter extends App with SimpleRoutingApp {
             search in "news" query q
           }.await
           complete(resp.getHits.hits().map(x => x.getSource.get("url"))
-            .mkString("[\"", "\",\"", "\"]"))
+            .mkString(","))
         }
       }
     }
