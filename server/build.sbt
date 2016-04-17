@@ -23,7 +23,9 @@ libraryDependencies ++= {
     // elastic search client
     "com.sksamuel.elastic4s" % "elastic4s-core_2.10" % "2.3.0",
     // redis
-    "com.livestream" %% "scredis" % "2.0.6"
+    "com.livestream" %% "scredis" % "2.0.6",
+    "com.github.scopt" %% "scopt" % "3.4.0"
+
   )
 }
     

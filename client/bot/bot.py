@@ -22,7 +22,13 @@ class MessageExtractArticle(telepot.helper.ChatHandler):
         urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
 
         if not urls:
-            self.sender.sendMessage("Please, provide a valid url.")
+            # self.sender.sendMessage("Please, provide a valid url.")
+            server_url = 'http://192.168.1.132:8080/search'
+            payload = {'q': message}
+            response = requests.get(server_url, params=payload)
+            print("Response: " + str(response))
+
+            self.sender.sendMessage(response)
             return
 
         json_items = []
@@ -37,7 +43,7 @@ class MessageExtractArticle(telepot.helper.ChatHandler):
             print("Parsed title:" + item["link_title"].encode('utf-8'))
             print("Parsed json:" + json_data.encode('utf-8'))
 
-            server_url = 'http://localhost:8080/add/article'
+            server_url = 'http://192.168.1.132:8080/add/article'
             r = requests.post(server_url, data=json_data, headers={"content-type": "application/json"})
             print("Response: " + str(r))
 
