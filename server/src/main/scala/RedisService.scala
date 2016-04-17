@@ -3,9 +3,6 @@ import scredis.Redis
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
-/**
-  * Redis operations for Statistics model.
-  */
 object RedisService {
 
   //redis configuration can be passed here: Redis(config)
