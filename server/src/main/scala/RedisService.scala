@@ -1,6 +1,5 @@
-package web
-
 import scredis.Redis
+
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
@@ -13,7 +12,6 @@ object RedisService {
   lazy val redis = Redis()
 
   // Import the internal ActorSystem's dispatcher (execution context) to register callbacks
-  import redis.dispatcher
 
   def get(id: String): Set[String] =
     Await.result(redis.sMembers[String](id), Duration.Inf)
