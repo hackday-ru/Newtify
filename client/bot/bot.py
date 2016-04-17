@@ -47,9 +47,8 @@ class MessageExtractArticle(telepot.helper.ChatHandler):
             r = requests.post(server_url, data=json_data, headers={"content-type": "application/json"})
             print("Response: " + str(r))
 
-            # TODO: remove sendMessage
-
             self.sender.sendMessage(item["link_title"])
+            self.sender.sendMessage('Got it!')
 
 
 TOKEN = sys.argv[1]  # get token from command-line
